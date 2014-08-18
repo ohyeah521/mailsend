@@ -4,10 +4,33 @@
 extern "C" {
 #endif
 
+#ifdef WIN32
+#define SYS_WINDOWS
+#else
+#define SYS_LINUX
+#endif
+
+#ifdef SYS_WINDOWS
+  
 #include <windows.h>
 #include <winsock.h>
+
+#endif
+
+#ifdef SYS_LINUX
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <unistd.h>
+#define SOCKET int
+#define closesocket close
+
+#endif
+
 #include <stdio.h>
-#include <conio.h>
+#include <stdlib.h>
 #include <string.h>
 
 //#include "../fdblib.h"

@@ -124,8 +124,10 @@ int base64_decode(char* out, const char* in,int in_len)
  */
 void socket_init()
 {
+    #ifdef SYS_WINDOWS
     WSADATA wsa;
     WSAStartup(MAKEWORD(2,2),&wsa);
+    #endif
 }
 
 /*通过网络地址字符串获得32位网络地址值
@@ -165,7 +167,7 @@ SOCKET socket_tcp_connect(const char* host,int port)
     if(s==-1)return -1;
     if(connect(s,(struct sockaddr*)&sa,sizeof(sa))==-1)
     {
-        closesocket(s);
+        socket_close(s);
         return -1;
     }
     return s;
